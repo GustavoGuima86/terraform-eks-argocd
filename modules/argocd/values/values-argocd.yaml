@@ -1,0 +1,40 @@
+redis-ha:
+  enabled: true
+
+controller:
+  replicas: 1
+
+repoServer:
+  replicas: 1
+
+applicationSet:
+  replicas: 1
+
+configs:
+  secret:
+    argocdServerAdminPassword: $2y$10$RYl6WNA4TOzibboD2zvQYem3Azd9lmcO2iXt22nQ3KMH8BEkQh/ga
+    # 12345678
+  params:
+    server.insecure: true
+
+global:
+  domain:
+
+server:
+  certificate:
+    enabled: false
+  ingress:
+    enabled: true
+    controller: aws
+    ingressClassName: alb
+    annotations:
+      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/target-type: ip
+      alb.ingress.kubernetes.io/backend-protocol: HTTP
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
+      ingress.kubernetes.io/force-ssl-redirect: "false"
+    aws:
+      serviceType: ClusterIP
+      backendProtocolVersion: HTTP1
+  extraArgs:
+    - --insecure
