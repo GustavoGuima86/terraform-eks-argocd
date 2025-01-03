@@ -1,6 +1,3 @@
-redis-ha:
-  enabled: true
-
 controller:
   replicas: 1
 
@@ -13,7 +10,7 @@ applicationSet:
 configs:
   secret:
     argocdServerAdminPassword: $2y$10$RYl6WNA4TOzibboD2zvQYem3Azd9lmcO2iXt22nQ3KMH8BEkQh/ga
-    # 12345678
+#     12345678
   params:
     server.insecure: true
 

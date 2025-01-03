@@ -107,10 +107,25 @@ module "eks_blueprints_kubernetes_addons" {
 
   enable_metrics_server               = true
   enable_cluster_autoscaler           = false
+
+
   enable_aws_load_balancer_controller = true
-
-
   aws_load_balancer_controller = {
-    values = ["vpcID: ${var.vpc_id}"]
+    set = [
+      {
+        name = "vpcId"
+        value = "var.vpc_id"
+      }
+    ]
+    chart_version = "1.11.0"
   }
+
+  depends_on = [module.eks]
+}
+
+
+module "ingress-controller" {
+  source = "../argocd"
+
+  depends_on = [module.eks, module.eks_blueprints_kubernetes_addons, module.ebs_csi]
 }

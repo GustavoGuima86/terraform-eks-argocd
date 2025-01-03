@@ -1,28 +1,18 @@
 applications:
-  - name: calculation
-    project: calcproj
+  - name: my-sample-app
+    project: test
     source:
-      repoURL: 'https://github.com/GustavoGuima86/calculationAPI'
-      path: calculation
+      repoURL: https://github.com/argoproj/argocd-example-apps.git
       targetRevision: HEAD
+      path: guestbook
     destination:
       server: 'https://kubernetes.default.svc'
-      namespace: test
+      namespace: default
     syncPolicy:
       automated: { }
-  - name: calculation1
-    project: default
-    source:
-      repoURL: 'https://github.com/GustavoGuima86/calculationAPI'
-      path: calculation
-      targetRevision: HEAD
-    destination:
-      server: 'https://kubernetes.default.svc'
-      namespace: test
-    syncPolicy:
-      automated: { }
+
 projects:
-  - name: calcproj
+  - name: test
     description: this is a test
     sourceRepos:
       - '*'
